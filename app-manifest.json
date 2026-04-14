@@ -1,0 +1,30 @@
+{
+  "name": "Oracle1 Fleet Keeper",
+  "url": "https://github.com/SuperInstance/oracle1-vessel",
+  "hook_attributes": {
+    "url": "http://YOUR_ORACLE_CLOUD_IP:8910/webhook",
+    "active": true,
+    "content_type": "json"
+  },
+  "redirect_url": "https://github.com/SuperInstance",
+  "callback_urls": [],
+  "public": true,
+  "request_oauth_on_install": true,
+  "setup_url": "https://github.com/SuperInstance/oracle1-vessel",
+  "description": "The Lighthouse Keeper \u2014 fleet monitoring, auto-labeling, dockside exams, webhook routing for the Cocapn fleet",
+  "default_events": [
+    "push",
+    "issues",
+    "issue_comment",
+    "pull_request",
+    "release",
+    "create"
+  ],
+  "default_permissions": {
+    "issues": "write",
+    "pull_requests": "write",
+    "contents": "read",
+    "metadata": "read",
+    "members": "read"
+  }
+}

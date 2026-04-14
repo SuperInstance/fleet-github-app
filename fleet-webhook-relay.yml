@@ -1,0 +1,31 @@
+name: Fleet Webhook Relay
+
+on:
+  push:
+    branches: [main, master]
+  issues:
+    types: [opened, edited, closed]
+  pull_request:
+    types: [opened, synchronize, closed]
+  issue_comment:
+    types: [created]
+  release:
+    types: [published]
+
+jobs:
+  relay:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Relay to Fleet App
+        run: |
+          EVENT=${{ github.event_name }}
+          PAYLOAD=$(cat $GITHUB_EVENT_PATH)
+          
+          # Send to lighthouse keeper webhook
+          curl -X POST http://${{ secrets.FLEET_APP_HOST }}:8910/webhook \
+            -H "X-GitHub-Event: $EVENT" \
+            -H "X-Hub-Signature-256: ${{ secrets.FLEET_WEBHOOK_SIG }}" \
+            -H "Content-Type: application/json" \
+            -d "$PAYLOAD" || true
+          
+          echo "Relayed $EVENT to fleet app"
